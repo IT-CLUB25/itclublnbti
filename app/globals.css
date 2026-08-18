@@ -1855,8 +1855,8 @@ html[lang="ja"] body {
 @media (max-width: 720px) {
   .site-header { padding: 10px 12px; }
   .nav-shell { min-height: 60px; border-radius: 15px; }
-  .verify-button,
-  .language-button { display: none; }
+  .verify-button { display: none; }
+  .language-button { display: inline-flex; }
   .hero-section,
   .content-section,
   .site-footer { width: min(100% - 28px, var(--site-width)); }
@@ -1912,6 +1912,8 @@ html[lang="ja"] body {
   .site-shell::before { opacity: 0.07; }
   .site-header { padding: 8px; }
   .nav-shell { min-height: 56px; padding: 0 7px 0 10px; border-radius: 14px; }
+  .site-header.is-scrolled { padding-top: 8px; }
+  .site-header.is-scrolled .nav-shell { min-height: 56px; }
   .brand-mark { width: 39px; height: 39px; flex-basis: 39px; }
   .brand-mark-image { width: 30px; height: 30px; }
   .brand-wordmark small { display: none; }
@@ -2135,6 +2137,7 @@ html[lang="ja"] body {
   .gallery-controls { right: 12px; bottom: 12px; left: 12px; }
   .nav-shell { padding: 0 5px 0 8px; }
   .site-header { padding: 6px; }
+  .site-header.is-scrolled { padding-top: 6px; }
   .club-highlight-strip article { padding: 14px 10px; }
   .resource-controls { gap: 6px; }
 }
