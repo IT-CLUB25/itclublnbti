@@ -1,0 +1,17 @@
+{
+  "name": "IT Club of LNBTI",
+  "short_name": "IT Club",
+  "description": "The digital home of LNBTI’s student-led technology community.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070b17",
+  "theme_color": "#070b17",
+  "icons": [
+    {
+      "src": "/images/logo-blue.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

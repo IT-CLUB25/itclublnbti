@@ -41,6 +41,7 @@ export default function EventsSection() {
 
   useEffect(() => {
     if (galleryPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    if (window.innerWidth < 768) return
     const timer = window.setInterval(() => setGalleryIndex((current) => (current + 1) % eventGallery.length), 4800)
     return () => window.clearInterval(timer)
   }, [galleryPaused])

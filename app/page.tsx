@@ -11,7 +11,7 @@ import NetworkBackground from "@/components/network-background"
 export default function Home() {
   return (
     <LanguageProvider>
-      <main className="site-shell">
+      <main id="main-content" className="site-shell">
         <MotionEffects />
         <NetworkBackground />
         <div className="site-ambient" aria-hidden="true" />

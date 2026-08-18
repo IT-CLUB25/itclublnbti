@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState, useCallback } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Menu, ShieldCheck, X } from "lucide-react"
@@ -14,13 +14,48 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [activeSection, setActiveSection] = useState(isResourcesPage ? "resources" : "home")
   const [scrolled, setScrolled] = useState(false)
+  const navRef = useRef<HTMLElement>(null)
+
+  const close = useCallback(() => setOpen(false), [])
 
   useEffect(() => {
-    const close = () => setOpen(false)
-    window.addEventListener("hashchange", close)
-    window.addEventListener("resize", close)
-    return () => { window.removeEventListener("hashchange", close); window.removeEventListener("resize", close) }
-  }, [])
+    const onHashChange = () => close()
+    let lastWidth = window.innerWidth
+    const onResize = () => {
+      const newWidth = window.innerWidth
+      if ((lastWidth >= 980 && newWidth < 980) || (lastWidth < 980 && newWidth >= 980)) close()
+      lastWidth = newWidth
+    }
+    window.addEventListener("hashchange", onHashChange)
+    window.addEventListener("resize", onResize)
+    return () => { window.removeEventListener("hashchange", onHashChange); window.removeEventListener("resize", onResize) }
+  }, [close])
+
+  useEffect(() => {
+    if (!open) return
+    const nav = navRef.current
+    if (!nav) return
+    const focusable = nav.querySelectorAll<HTMLElement>("a, button")
+    if (focusable.length === 0) return
+    const first = focusable[0]
+    const last = focusable[focusable.length - 1]
+    const handleTab = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return
+      if (e.shiftKey) { if (document.activeElement === first) { e.preventDefault(); last.focus() } }
+      else { if (document.activeElement === last) { e.preventDefault(); first.focus() } }
+    }
+    const handleEscape = (e: KeyboardEvent) => { if (e.key === "Escape") close() }
+    document.addEventListener("keydown", handleTab)
+    document.addEventListener("keydown", handleEscape)
+    first.focus()
+    return () => { document.removeEventListener("keydown", handleTab); document.removeEventListener("keydown", handleEscape) }
+  }, [open, close])
+
+  useEffect(() => {
+    if (open) document.body.style.overflow = "hidden"
+    else document.body.style.overflow = ""
+    return () => { document.body.style.overflow = "" }
+  }, [open])
 
   useEffect(() => {
     const updateScrollState = () => setScrolled(window.scrollY > 28)
@@ -59,7 +94,7 @@ export default function Navbar() {
     <header className={scrolled ? "site-header is-scrolled" : "site-header"}>
       <div className="nav-shell">
         <Link href="/" aria-label="IT Club of LNBTI home"><Logo useSilver /></Link>
-        <nav id="primary-navigation" className={open ? "nav-links open" : "nav-links"} aria-label="Primary navigation">
+        <nav id="primary-navigation" ref={navRef} className={open ? "nav-links open" : "nav-links"} aria-label="Primary navigation">
           {items.map((item) => {
             const active = activeSection === item.section
             return <Link key={item.href} href={item.href} className={active ? "active" : ""} aria-current={active ? "page" : undefined} onClick={() => { setActiveSection(item.section); setOpen(false) }}>{item.label}</Link>
@@ -80,6 +115,7 @@ export default function Navbar() {
           </button>
         </div>
       </div>
+      {open && <div className="nav-backdrop visible" onClick={close} aria-hidden="true" />}
     </header>
   )
 }

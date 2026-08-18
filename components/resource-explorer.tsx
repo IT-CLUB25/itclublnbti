@@ -42,7 +42,8 @@ export default function ResourceExplorer() {
         </div>
         <div className="resource-controls">
           <label><span className="sr-only">{t("searchTopics")}</span><Search size={17} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t("searchTopics")} /></label>
-          <select value={course} onChange={(event) => setCourse(event.target.value)} aria-label={t("filterProgramme")}>
+          <label className="sr-only" htmlFor="course-filter">{t("filterProgramme")}</label>
+          <select id="course-filter" value={course} onChange={(event) => setCourse(event.target.value)}>
             <option value="all">{t("allProgrammes")}</option>
             {coursesData.map((item) => <option key={item.id} value={item.name}>{item.name}</option>)}
           </select>
@@ -53,9 +54,9 @@ export default function ResourceExplorer() {
         <span><FileText size={16} /> {filtered.length} {t("plannedResources")}</span>
         <span><Clock3 size={16} /> {t("publicationProgress")}</span>
       </div>
-      <div className="resource-list" tabIndex={0} aria-label={t("scrollResources")}>
+      <div className="resource-list" role="list" aria-label={t("scrollResources")}>
         {filtered.map((resource) => (
-          <article key={resource.id}>
+          <article key={resource.id} role="listitem" tabIndex={0}>
             <div className="resource-file-icon"><FileText size={20} /></div>
             <div>
               <span>{resource.course} · {resource.module}</span>

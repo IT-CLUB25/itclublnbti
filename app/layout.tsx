@@ -28,14 +28,22 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
   themeColor: "#070b17",
   colorScheme: "dark",
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <a href="#main-content" className="skip-to-content">Skip to content</a>
+        <script dangerouslySetInnerHTML={{ __html: 
+          "try{var l=localStorage.getItem('itclub-language');if(l==='ja')document.documentElement.lang='ja'}catch(e){}" 
+        }} />
+        {children}
+      </body>
     </html>
   )
 }

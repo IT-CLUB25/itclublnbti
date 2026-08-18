@@ -27,7 +27,8 @@ export default function NetworkBackground() {
     let animationFrame = 0
 
     const createNodes = () => {
-      const count = Math.max(24, Math.min(72, Math.round((width * height) / 22000)))
+      const isMobile = width < 768
+      const count = Math.max(12, Math.min(isMobile ? 28 : 72, Math.round((width * height) / (isMobile ? 35000 : 22000))))
       nodes = Array.from({ length: count }, (_, index) => ({
         x: Math.random() * width,
         y: Math.random() * height,
@@ -113,6 +114,15 @@ export default function NetworkBackground() {
       pointer.active = true
     }
     const onPointerLeave = () => { pointer.active = false }
+    const onVisibilityChange = () => {
+        if (document.hidden) {
+          window.cancelAnimationFrame(animationFrame)
+        } else {
+          if (!reducedMotion.matches) animate()
+          else draw(false)
+        }
+      }
+
     const onMotionChange = () => {
       window.cancelAnimationFrame(animationFrame)
       if (reducedMotion.matches) draw(false)
@@ -124,6 +134,7 @@ export default function NetworkBackground() {
     window.addEventListener("resize", resize)
     window.addEventListener("pointermove", onPointerMove, { passive: true })
     document.addEventListener("pointerleave", onPointerLeave)
+    document.addEventListener("visibilitychange", onVisibilityChange)
     reducedMotion.addEventListener("change", onMotionChange)
 
     return () => {
@@ -131,6 +142,7 @@ export default function NetworkBackground() {
       window.removeEventListener("resize", resize)
       window.removeEventListener("pointermove", onPointerMove)
       document.removeEventListener("pointerleave", onPointerLeave)
+      document.removeEventListener("visibilitychange", onVisibilityChange)
       reducedMotion.removeEventListener("change", onMotionChange)
     }
   }, [])
