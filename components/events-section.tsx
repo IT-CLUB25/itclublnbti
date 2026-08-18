@@ -114,6 +114,16 @@ export default function EventsSection() {
         </div>
       </div>
       <article className="featured-event">
+        <Image
+          className="featured-event-bg"
+          src="/images/events/cyberverse-2026.jpg"
+          alt=""
+          fill
+          priority
+          sizes="(max-width: 720px) 100vw, 90vw"
+          aria-hidden="true"
+        />
+        <div className="featured-event-overlay" aria-hidden="true" />
         <div className="event-signal"><Sparkles size={17} /> {t("upcoming")} · <time dateTime={upcomingEvent.dateISO}>{upcomingEvent.date[language]}</time></div>
         <div className="featured-event-copy"><span>{t("presents")}</span><h3>CyberVerse <em>2026</em></h3><p>{t("eventDescription")}</p><div className="event-meta"><span><CalendarDays size={17} /> {upcomingEvent.date[language]}</span><span><MapPin size={17} /> {t("venue")}</span></div><span className="registration-status">{t("registerInterest")}</span></div>
         <div className="game-list">{upcomingEvent.activities.map((activity, index) => { const Icon = activityIcons[index]; return <span key={activity.en}><small>0{index + 1}</small><Icon size={17} />{activity[language]}</span> })}</div>
