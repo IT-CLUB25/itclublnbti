@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   description:
     "The digital home of LNBTI's student-led technology community—events, workshops, resources, connections, and verified achievements.",
   keywords: ["LNBTI", "IT Club", "technology", "students", "Sri Lanka", "coding", "cybersecurity"],
+  manifest: "/manifest.json",
   openGraph: {
     title: "IT Club of LNBTI",
     description: "Build skills, share knowledge, and create what comes next.",

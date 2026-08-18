@@ -2,6 +2,7 @@ import Navbar from "@/components/navbar"
 import Hero from "@/components/hero"
 import EventsSection from "@/components/events-section"
 import AboutSection from "@/components/about-section"
+import CertificationsSection from "@/components/certifications-section"
 import ContactSection from "@/components/contact-section"
 import Footer from "@/components/footer"
 import { LanguageProvider } from "@/components/language-context"
@@ -19,6 +20,7 @@ export default function Home() {
         <Hero />
         <EventsSection />
         <AboutSection />
+        <CertificationsSection />
         <ContactSection />
         <Footer />
       </main>

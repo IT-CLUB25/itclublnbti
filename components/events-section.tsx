@@ -17,11 +17,6 @@ export default function EventsSection() {
   const pageCount = Math.ceil(pastEvents.length / itemsPerPage)
   const visibleEvents = useMemo(() => pastEvents.slice(page * itemsPerPage, page * itemsPerPage + itemsPerPage), [page, itemsPerPage])
   const activityIcons = [Braces, Flag, Bot, Gamepad2]
-  const workshopDescriptions = {
-    "Day 01": { en: "Introducing students to why research is conducted and why it matters.", ja: "研究を行う理由と、その重要性について学ぶ入門セッションでした。" },
-    "Day 02": { en: "Understanding how to read and analyse a research paper effectively.", ja: "研究論文を効果的に読み、分析する方法を学びました。" },
-    "Day 03": { en: "Writing a proper research paper, including its structure and referencing style.", ja: "適切な研究論文の書き方、論文構成、参考文献の記載スタイルを学びました。" },
-  } as const
 
   useEffect(() => {
     const update = () => setItemsPerPage(window.innerWidth < 720 ? 1 : window.innerWidth < 980 ? 2 : 3)
@@ -134,8 +129,7 @@ export default function EventsSection() {
       <div className="event-carousel" aria-roledescription="carousel" aria-label={t("previously")}>
         <div className="event-grid" aria-live="polite">
           {visibleEvents.map((event) => {
-            const workshopDay = Object.keys(workshopDescriptions).find((day) => event.title.endsWith(day)) as keyof typeof workshopDescriptions | undefined
-            const description = workshopDay ? workshopDescriptions[workshopDay] : event.description
+            const description = event.description
             const title = language === "ja" && "titleJa" in event ? event.titleJa : event.title
             const speaker = language === "ja" && "speakerJa" in event ? event.speakerJa : event.speaker
             return <article className="event-card" key={event.title}>
